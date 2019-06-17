@@ -11,4 +11,4 @@ Structure of folders:
 ~/NHDPLus/EROM/{region}/{subregion}/EROMExtension/
 
 Required library in R:
-1. foreign - IO dbf files
+1. foreign
