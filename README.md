@@ -12,3 +12,9 @@ Structure of folders:
 
 Required library in R:
 1. foreign
+
+Library functionality description
+1. IO dbf files
+
+Output examples
+https://drive.google.com/drive/folders/1_Xq2Td0jMoAU7m45626xH9ZGCGDyoVeC?usp=sharing
