@@ -1,19 +1,25 @@
 require (foreign)
 
 #basin area upstream
-setwd("~/NHDPLus/BASIN_CHAR_TOT_CONUS")
+setwd("~/NHDPLus/BASIN_CHAR_TOT_CONUS") #total accum
 basin <- read.csv('BASIN_CHAR_TOT_CONUS.TXT')
 mytable <- data.frame (basin$COMID,basin$TOT_BASIN_AREA) #accum draina area
-names (mytable) <- c('COMID', 'TOT_BASIN_AREA')
+names (mytable) <- c('COMID', 'BASINAREA')
 
 #catchment slope and stream length
 setwd("~/NHDPLus/BASIN_CHAR_CAT_CONUS")
-slope <- read.csv ('BASIN_CHAR_CAT_CONUS.TXT')
-mytable2 <- data.frame (slope$COMID, slope$CAT_STREAM_SLOPE, slope$CAT_STREAM_LENGTH)
-names (mytable2) <- c('COMID', 'CAT_STREAM_SLOPE','CAT_STREAM_LENGTH')
+stream <- read.csv ('BASIN_CHAR_CAT_CONUS.TXT')
+mytable2 <- data.frame (stream$COMID,stream$CAT_STREAM_LENGTH)
+names (mytable2) <- c('COMID','STREAMLENGTH')
+
+setwd ("~/NHDPLus/NHDPlus_Slope")
+slope <- read.csv ('NHDPlus_Slope.txt')
+mytable3 <- data.frame (slope$COMID, slope$SLOPE)
+names(mytable3) <- c('COMID', 'STREAMSLOPE')
 
 #merge area, slope, length
 datas <- merge (mytable, mytable2, by = 'COMID')
+datas <- merge (datas, mytable3, by = 'COMID')
 
 #initialize my column
 datas$Q0001E <- -9999
@@ -45,7 +51,7 @@ for (region in myfiles){
 }
 
 #combine and rename basin characteristics
-datas_bchar <- data.frame (datas$COMID, datas$TOT_BASIN_AREA, datas$CAT_STREAM_SLOPE, datas$CAT_STREAM_LENGTH)
+datas_bchar <- data.frame (datas$COMID, datas$BASINAREA, datas$STREAMSLOPE, datas$STREAMLENGTH)
 names(datas_bchar) <- names(datas)[1:4]
 
 #combine and rename flow characteristics
